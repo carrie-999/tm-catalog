@@ -1,0 +1,17 @@
+body {
+  background-color: #000;
+  color: #eee;
+}
+a {
+  color: #40e0d0;
+}
+.table-dark {
+  background-color: #111;
+}
+.btn-success {
+  background-color: #008000;
+  border-color: #006400;
+}
+.navbar {
+  background-color: #222;
+}

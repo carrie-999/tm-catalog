@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Lista nazw" %}{% endblock %}
+{% block content %}
+<h1>{% trans "Lista zarejestrowanych nazw" %}</h1>
+<form method="get" class="row g-3 mb-3">
+  <div class="col-md-4"><input type="text" name="q" value="{{ request.GET.q }}" placeholder="{% trans 'Szukaj' %}" class="form-control"></div>
+  <div class="col-md-3">
+    <select name="status" class="form-select">
+      <option value="">{% trans 'Wszystkie statusy' %}</option>
+      {% for code,label in view.model.STATUS_CHOICES %}
+        <option value="{{ code }}" {% if request.GET.status == code %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="order" class="form-select">
+      <option value="name" {% if request.GET.order == 'name' %}selected{% endif %}>{% trans "Nazwa" %}</option>
+<option value="status" {% if request.GET.order == 'status' %}selected{% endif %}>{% trans "Status" %}</option>
+<option value="created_at" {% if request.GET.order == 'created_at' %}selected{% endif %}>{% trans "Data dodania" %}</option>
+    </select>
+  </div>
+  <div class="col-md-2"><button class="btn btn-success">{% trans "Filtruj" %}</button></div>
+</form>
+<table class="table table-dark table-striped">
+  <thead><tr><th>{% trans "Nazwa" %}</th><th>{% trans "Status" %}</th><th>{% trans "Data" %}</th><th>{% trans "Użytkownik" %}</th></tr></thead>
+  <tbody>
+    {% for obj in names %}
+      <tr><td>{{ obj.name }}</td><td>{{ obj.get_status_display }}</td><td>{{ obj.created_at|date:'SHORT_DATETIME_FORMAT' }}</td><td>{{ obj.user.username }}</td></tr>
+    {% empty %}
+      <tr><td colspan="4">{% trans "Brak wyników" %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

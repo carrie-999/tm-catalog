@@ -1,0 +1,14 @@
+{% extends 'catalog/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Rejestracja nazwy" %}{% endblock %}
+{% block content %}
+<h1>{% trans "Zarejestruj nową nazwę" %}</h1>
+<form method="post">{% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="mb-3">{{ form.name.label_tag }}{{ form.name }}</div>
+  <div class="mb-3">{{ form.country.label_tag }}{{ form.country }}</div>
+  <div class="mb-3">{{ form.postal_code.label_tag }}{{ form.postal_code }}</div>
+  <div class="mb-3 form-check">{{ form.accept_terms }}{{ form.accept_terms.label_tag }}</div>
+  <button class="btn btn-primary">{% trans "Zarejestruj" %}</button>
+</form>
+{% endblock %}
